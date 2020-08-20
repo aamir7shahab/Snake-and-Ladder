@@ -19,14 +19,19 @@ class SnakeAndLadder {
 	}
 
 	public static void main(String[] args) {
-		numOnDice = throwDice();
-		selectedOption = checkOptions();
-		if (selectedOption == 2)
-			currentPosition += numOnDice;
-		else if (selectedOption == 3)
-			currentPosition -= numOnDice; 
-		else
-			;//do nothing
-		System.out.println("Current Position : "+ currentPosition);
+		while (currentPosition < END_POSITION-1) {
+			numOnDice = throwDice();
+			selectedOption = checkOptions();
+			if (selectedOption == 2)
+				currentPosition += numOnDice;
+			else if (selectedOption == 3) {
+				currentPosition -= numOnDice;
+				if (currentPosition < 0)
+					currentPosition = 0;
+			} 
+			else
+				;//do nothing
+			System.out.println("Current Position : "+ currentPosition + " Number on Dice: "+ numOnDice + " Option: "+ selectedOption);
+		}
 	}
 }
