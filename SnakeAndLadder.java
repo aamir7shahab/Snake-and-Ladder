@@ -7,9 +7,11 @@ class SnakeAndLadder {
 	private static int currentPosition = START_POSITION;
 	private static int numOnDice = 0;
 	private static int selectedOption = 0;
+	private static int diceThrown = 0;
 
 	//Method to get number on dice
 	public static int throwDice() {
+		++diceThrown;
 		return (int) (Math.floor(Math.random()*10)%6)+1;
 	}
 
@@ -19,7 +21,7 @@ class SnakeAndLadder {
 	}
 
 	public static void main(String[] args) {
-		while (currentPosition < END_POSITION-1) {
+		while (currentPosition <= END_POSITION-1) {
 			numOnDice = throwDice();
 			selectedOption = checkOptions();
 			if (selectedOption == 2) {
@@ -37,5 +39,6 @@ class SnakeAndLadder {
 				;//do nothing
 			System.out.println("Option: "+ selectedOption +" Number on Dice: "+ numOnDice +" Current Position : "+ currentPosition);
 		}
+		System.out.println("Total number of times dice was thrown : "+diceThrown);
 	}
 }
