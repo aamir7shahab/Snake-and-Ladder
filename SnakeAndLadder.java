@@ -22,8 +22,12 @@ class SnakeAndLadder {
 		while (currentPosition < END_POSITION-1) {
 			numOnDice = throwDice();
 			selectedOption = checkOptions();
-			if (selectedOption == 2)
-				currentPosition += numOnDice;
+			if (selectedOption == 2) {
+				if ((currentPosition+numOnDice) > END_POSITION)
+					;
+				else
+					currentPosition += numOnDice;
+			}
 			else if (selectedOption == 3) {
 				currentPosition -= numOnDice;
 				if (currentPosition < 0)
@@ -31,7 +35,7 @@ class SnakeAndLadder {
 			} 
 			else
 				;//do nothing
-			System.out.println("Current Position : "+ currentPosition + " Number on Dice: "+ numOnDice + " Option: "+ selectedOption);
+			System.out.println("Option: "+ selectedOption +" Number on Dice: "+ numOnDice +" Current Position : "+ currentPosition);
 		}
 	}
 }
