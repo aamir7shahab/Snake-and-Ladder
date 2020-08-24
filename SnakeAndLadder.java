@@ -13,6 +13,8 @@ class SnakeAndLadder {
 	private static String turnMessage = "";
 	private static int diceThrown = 0;
 	private static int whoseTurn = 0; // 0 --> player1 and 1 --> player2
+	private static int repeatTurnFlag = 0;
+	private static int checkWin = 0;
 	private static ArrayList<ArrayList<Integer> > players;
 
 
@@ -50,8 +52,12 @@ class SnakeAndLadder {
 			turnMessage = "Hurray! You climbed a ladder.";
 			if ((currentPosition+numOnDice) > END_POSITION)
 				;
-			else
+			else{
 				currentPosition += numOnDice;
+				if (currentPosition == END_POSITION)
+					checkWin = 1;
+			}
+			repeatTurnFlag = 1;
 		}
 		else if (selectedOption == 3) {
 			optionStatus = "Snake";
@@ -59,10 +65,12 @@ class SnakeAndLadder {
 			currentPosition -= numOnDice;
 			if (currentPosition < 0)
 				currentPosition = 0;
+			repeatTurnFlag = 0;
 		} 
 		else {
 			optionStatus = "No Play";
 			turnMessage = "Sorry! No play for you.";//do nothing
+			repeatTurnFlag = 0;
 		}
 
 		// setting dice_roll_count and current position of current player into array_list
@@ -80,13 +88,17 @@ class SnakeAndLadder {
 		players.add(new ArrayList<Integer>(Arrays.asList(0,0)));
 
 		while (players.get(0).get(1) <= END_POSITION-1 && players.get(1).get(1) <= END_POSITION-1){
-			playAsOption(whoseTurn);
-			System.out.println("Player "+ (whoseTurn+1) +" turn:- Option: "+ selectedOption + " (" +optionStatus+ ")\t" + "Number on Dice: "
-								+ numOnDice +" Current Position : "+ currentPosition +"\tMessage : " + turnMessage);
+			do{
+				playAsOption(whoseTurn);
+				System.out.println("Player "+ (whoseTurn+1) +" turn:- Option: "+ selectedOption + " (" +optionStatus+ ")\t" + "Number on Dice: "
+									+ numOnDice +" Current Position : "+ currentPosition +"  \t"+"Message : " + turnMessage);
+			} while(repeatTurnFlag == 1 && checkWin == 0);
 			changePlayer();
 		}
 		changePlayer();
-		System.out.println("Winner : Player "+ (whoseTurn+1));
-		System.out.println("Total number of times dice was thrown : "+(players.get(0).get(0)+players.get(1).get(0)));
+		System.out.println("Congrats winner : Player "+ (whoseTurn+1));
+		System.out.println("Player 1 dice count  : "+players.get(0).get(0));
+		System.out.println("Player 2 dice count  : "+players.get(1).get(0));
+		System.out.println("Full game dice count : "+(players.get(0).get(0)+players.get(1).get(0)));
 	}
 }
